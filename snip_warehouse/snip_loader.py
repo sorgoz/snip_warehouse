@@ -1,7 +1,7 @@
 import asyncpg
 import asyncio
 import ftplib
-import gzip
+import bz2
 from multiprocessing import cpu_count, Pool
 import time
 import threading
@@ -62,7 +62,7 @@ class SnipLoader:
         print(f"Found '{num_processes}' CPUs")
         loop = asyncio.get_event_loop()
         with Pool(num_processes) as pool:
-            with gzip.open(dbsnp_filename) as gzip_fp:
+            with bz2.open(dbsnp_filename) as gzip_fp:
                 print("Mapping...")
                 copy_from_data_iter = pool.imap_unordered(
                     self._generate_parsed_data,
