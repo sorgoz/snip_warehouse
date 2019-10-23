@@ -24,9 +24,9 @@ class SnipLoader:
         self.chromosome = str(chromosome)
         self.dbsnp_filename = dbsnp_filename
         with open(dbsnp_filename, "wb") as fp:
-            ftp = ftplib.FTP("ftp.ncbi.nlm.nih.gov")
+            ftp = ftplib.FTP("ftp.ncbi.nih.gov")
             ftp.login()
-            ftp.cwd("snp/.redesign/latest_release/JSON")
+            ftp.cwd("snp/latest_release/JSON")
             size_gb = round(ftp.size(dbsnp_filename) / (1024**3), 2)
             print(f"Filesize: {size_gb} GB")
             sock = None
@@ -71,7 +71,7 @@ class SnipLoader:
                 loop.run_until_complete(self._load(copy_from_data_iter))
 
     async def _load(self, parsed_data_iter):
-        conn = await asyncpg.connect(database=self.database_name, user="SeanH")
+        conn = await asyncpg.connect(database=self.database_name, user="sergey")
         await conn.execute("SET session_replication_role to 'replica'")
         table_names = [table_name for table_name in RefSnpCopyFromData._fields]
         row_buff_dict = {table_name: [] for table_name in table_names}
@@ -132,7 +132,7 @@ class SnipLoader:
 
     @staticmethod
     def _find_alleles_from_assembly(rsnp_placements,
-                                    assembly_name="GRCh38"):
+                                    assembly_name="GRCh37"):
         for rsnp_placement in rsnp_placements:
             annot = rsnp_placement.get('placement_annot')
             if not annot or not annot.get('seq_id_traits_by_assembly'):
