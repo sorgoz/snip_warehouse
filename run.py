@@ -16,4 +16,4 @@ for chr_suffix in chr_suffixes:
                                     chr_suffix)
     snip_loader.load_ref_snps(
         f"refsnp-chr{chr_suffix}.json.bz2", str(chr_suffix))
-    os.system(f"rm refsnp-chr{chr_suffix}.json")
+    os.system(f"rm refsnp-chr{chr_suffix}.json.bz2")
