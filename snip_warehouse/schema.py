@@ -94,11 +94,11 @@ class User(Base):
 def init_db(database_name):
     os.system(f"echo 'DROP DATABASE {database_name};"
               f"CREATE DATABASE {database_name};'"
-              " | psql -U SeanH postgres")
+              " | psql -U sergey postgres")
     metadata.create_all()
     session = smaker()
     session.add(
-        User(fname="Sean", lname="Harrington", email="seanharr11@gmail.com"))
+        User(fname="sergey", lname="", email="e@example.com"))
 
     session.commit()
 
